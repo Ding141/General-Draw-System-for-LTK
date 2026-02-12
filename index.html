@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三国杀武将随机抽取器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>三国杀武将随机抽取器</h1>
+            <p class="subtitle">面杀专用 · 简洁高效</p>
+        </header>
+
+        <!-- 第一步：选择人数和模式 -->
+        <section class="setup-section">
+            <h2>第一步：设置对局</h2>
+            <div class="setup-grid">
+                <div class="setup-item">
+                    <label for="playerCount">游戏人数</label>
+                    <select id="playerCount">
+                        <option value="2">2人</option>
+                        <option value="3">3人</option>
+                        <option value="4">4人</option>
+                        <option value="5">5人</option>
+                        <option value="6">6人</option>
+                        <option value="7">7人</option>
+                        <option value="8" selected>8人</option>
+                    </select>
+                </div>
+                <div class="setup-item">
+                    <label for="gameMode">游戏模式</label>
+                    <select id="gameMode">
+                        <option value="normal" selected>普通模式</option>
+                        <option value="landlord">斗地主模式</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mode-desc">
+                <span id="modeDesc">普通模式：抽取 5×人数 = 40 名武将</span>
+            </div>
+        </section>
+
+        <!-- 第二步：选择武将包 -->
+        <section class="pack-section">
+            <h2>第二步：选择武将包</h2>
+            <div class="pack-list">
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="standard" checked>
+                    <span class="pack-name">标准包</span>
+                    <span class="pack-count" data-pack="standard">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="wind">
+                    <span class="pack-name">神话再临·风</span>
+                    <span class="pack-count" data-pack="wind">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="forest">
+                    <span class="pack-name">神话再临·林</span>
+                    <span class="pack-count" data-pack="forest">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="fire">
+                    <span class="pack-name">神话再临·火</span>
+                    <span class="pack-count" data-pack="fire">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="mountain">
+                    <span class="pack-name">神话再临·山</span>
+                    <span class="pack-count" data-pack="mountain">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_standard">
+                    <span class="pack-name">界限突破·标准</span>
+                    <span class="pack-count" data-pack="jie_standard">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_forest">
+                    <span class="pack-name">界限突破·林</span>
+                    <span class="pack-count" data-pack="jie_forest">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_fire">
+                    <span class="pack-name">界限突破·火</span>
+                    <span class="pack-count" data-pack="jie_fire">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_mountain">
+                    <span class="pack-name">界限突破·山</span>
+                    <span class="pack-count" data-pack="jie_mountain">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="yj2011">
+                    <span class="pack-name">一将成名2011</span>
+                    <span class="pack-count" data-pack="yj2011">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="yj2012">
+                    <span class="pack-name">一将成名2012</span>
+                    <span class="pack-count" data-pack="yj2012">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="yj2013">
+                    <span class="pack-name">一将成名2013</span>
+                    <span class="pack-count" data-pack="yj2013">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="yj2014">
+                    <span class="pack-name">一将成名2014</span>
+                    <span class="pack-count" data-pack="yj2014">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="yj2015">
+                    <span class="pack-name">一将成名2015</span>
+                    <span class="pack-count" data-pack="yj2015">0</span>
+                </label>
+            </div>
+            <div class="pack-actions">
+                <button type="button" id="selectAllPacks">全选</button>
+                <button type="button" id="deselectAllPacks">全不选</button>
+            </div>
+            <div class="total-info">
+                已选武将包：<span id="selectedPackCount">1</span> 个 | 可用武将：<span id="totalGeneralCount">0</span> 名
+            </div>
+        </section>
+
+        <!-- 第三步：禁用武将 -->
+        <section class="ban-section">
+            <h2>第三步：禁用武将（可选）</h2>
+            <button type="button" id="openBanModal" class="btn-secondary">
+                管理禁用列表 <span id="banCount">(0)</span>
+            </button>
+        </section>
+
+        <!-- 抽取按钮 -->
+        <section class="draw-section">
+            <button type="button" id="drawBtn" class="btn-primary">开始抽取武将</button>
+        </section>
+
+        <!-- 结果显示区域 -->
+        <section class="result-section" id="resultSection" style="display: none;">
+            <h2>抽取结果</h2>
+
+            <!-- 普通模式结果 -->
+            <div id="normalResult" class="result-normal">
+                <div class="result-header">
+                    <span>共抽取 <strong id="normalTotal">0</strong> 名武将</span>
+                    <button type="button" id="redrawBtn" class="btn-small">重新抽取</button>
+                </div>
+                <div class="general-grid" id="normalGeneralGrid"></div>
+            </div>
+
+            <!-- 斗地主模式结果 -->
+            <div id="landlordResult" class="result-landlord" style="display: none;">
+                <div class="landlord-section">
+                    <h3>地主武将池（5选1）</h3>
+                    <div class="general-grid" id="landlordGrid"></div>
+                </div>
+                <div class="farmer-section">
+                    <h3>农民武将池 A（3选1）</h3>
+                    <div class="general-grid" id="farmerAGrid"></div>
+                </div>
+                <div class="farmer-section">
+                    <h3>农民武将池 B（3选1）</h3>
+                    <div class="general-grid" id="farmerBGrid"></div>
+                </div>
+                <div class="result-actions">
+                    <button type="button" id="redrawLandlordBtn" class="btn-small">重新抽取</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 禁用武将弹窗 -->
+    <div class="modal" id="banModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>禁用武将</h3>
+                <button type="button" class="close-btn" id="closeBanModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="ban-filter">
+                    <input type="text" id="banSearch" placeholder="搜索武将名称...">
+                    <select id="banPackFilter">
+                        <option value="all">全部武将包</option>
+                    </select>
+                </div>
+                <div class="ban-list" id="banList"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="clearAllBan">清空禁用</button>
+                <button type="button" id="confirmBan">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 武将详情弹窗 -->
+    <div class="modal" id="detailModal" style="display: none;">
+        <div class="modal-content detail-content">
+            <div class="modal-header">
+                <h3 id="detailName">武将详情</h3>
+                <button type="button" class="close-btn" id="closeDetailModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-info">
+                    <span class="detail-faction" id="detailFaction"></span>
+                    <span class="detail-hp" id="detailHp"></span>
+                </div>
+                <div class="detail-skills" id="detailSkills"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

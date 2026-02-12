@@ -1,0 +1,526 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 头部 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 2px solid #8b0000;
+}
+
+header h1 {
+    color: #8b0000;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* 区块通用样式 */
+section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* 设置区域 */
+.setup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.setup-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.setup-item label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.setup-item select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    background: #fff;
+}
+
+.setup-item select:disabled {
+    background: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.mode-desc {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f0f8ff;
+    border-radius: 4px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* 武将包选择 */
+.pack-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pack-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pack-item:hover {
+    background: #f9f9f9;
+    border-color: #8b0000;
+}
+
+.pack-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.pack-name {
+    flex: 1;
+    font-size: 0.95em;
+}
+
+.pack-count {
+    font-size: 0.85em;
+    color: #999;
+}
+
+.pack-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pack-actions button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.pack-actions button:hover {
+    background: #f0f0f0;
+}
+
+.total-info {
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.total-info span {
+    font-weight: bold;
+    color: #8b0000;
+}
+
+/* 禁用区域 */
+.ban-section button {
+    padding: 10px 20px;
+}
+
+/* 按钮样式 */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    background: #8b0000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background: #a00000;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.btn-secondary:hover {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    background: #8b0000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.btn-small:hover {
+    background: #a00000;
+}
+
+/* 结果区域 */
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* 武将卡片 */
+.general-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.general-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.general-card:hover {
+    border-color: #8b0000;
+    box-shadow: 0 2px 8px rgba(139, 0, 0, 0.1);
+}
+
+.general-card.disabled {
+    opacity: 0.5;
+}
+
+.general-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.general-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.general-faction {
+    font-size: 0.8em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.faction-wei { background: #1e50a2; }
+.faction-shu { background: #228b22; }
+.faction-wu { background: #8b0000; }
+.faction-qun { background: #808080; }
+
+.general-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85em;
+    color: #666;
+}
+
+.general-hp::before {
+    content: "体力: ";
+}
+
+.general-pack {
+    font-size: 0.8em;
+    color: #999;
+}
+
+/* 斗地主结果 */
+.landlord-section,
+.farmer-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 6px;
+}
+
+.landlord-section h3,
+.farmer-section h3 {
+    margin-bottom: 10px;
+    color: #8b0000;
+    font-size: 1em;
+}
+
+.farmer-section {
+    border-left: 4px solid #228b22;
+}
+
+.landlord-section {
+    border-left: 4px solid #ffd700;
+    background: #fffbeb;
+}
+
+.result-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 弹窗 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-content {
+    max-width: 500px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    font-size: 1.2em;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #999;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-footer button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+}
+
+.modal-footer button:last-child {
+    background: #8b0000;
+    color: #fff;
+    border-color: #8b0000;
+}
+
+/* 禁用列表 */
+.ban-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.ban-filter input,
+.ban-filter select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.ban-filter input {
+    flex: 1;
+}
+
+.ban-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.ban-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.ban-item:last-child {
+    border-bottom: none;
+}
+
+.ban-item:hover {
+    background: #f9f9f9;
+}
+
+.ban-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+}
+
+.ban-item-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ban-item-name {
+    font-weight: bold;
+}
+
+.ban-item-pack {
+    font-size: 0.85em;
+    color: #999;
+}
+
+/* 武将详情 */
+.detail-info {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.detail-faction {
+    padding: 4px 12px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+.detail-hp {
+    padding: 4px 12px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.detail-skills {
+    line-height: 1.8;
+    color: #555;
+}
+
+.detail-skills p {
+    margin-bottom: 10px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .pack-list {
+        grid-template-columns: 1fr;
+    }
+
+    .general-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Debug</title>
+</head>
+<body>
+    <h1>Debug Page</h1>
+    <div id="output"></div>
+    <button id="testBtn">Test Button</button>
+
+    <script src="data.js"></script>
+    <script>
+        var output = document.getElementById('output');
+
+        // Test 1: Check if SGS_DATA is loaded
+        if (typeof SGS_DATA === 'undefined') {
+            output.innerHTML += '<p style="color:red">FAIL: SGS_DATA not loaded</p>';
+        } else {
+            output.innerHTML += '<p style="color:green">PASS: SGS_DATA loaded</p>';
+            var count = 0;
+            for (var key in SGS_DATA) {
+                count += SGS_DATA[key].generals.length;
+            }
+            output.innerHTML += '<p>Total generals: ' + count + '</p>';
+        }
+
+        // Test 2: Check button click
+        document.getElementById('testBtn').addEventListener('click', function() {
+            alert('Button clicked! JavaScript is working.');
+        });
+
+        // Test 3: Check basic DOM manipulation
+        setTimeout(function() {
+            output.innerHTML += '<p style="color:green">PASS: JavaScript is running</p>';
+        }, 100);
+    </script>
+</body>
+</html>
