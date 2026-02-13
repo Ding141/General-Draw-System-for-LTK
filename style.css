@@ -232,18 +232,73 @@ button {
     border-bottom: 1px solid #eee;
 }
 
+.result-header .result-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-save {
+    background: #2c7a2c;
+}
+
+.btn-save:hover {
+    background: #3a9a3a;
+}
+
 /* 武将卡片 */
 .general-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 15px;
+    align-items: stretch;
+}
+
+/* 响应式：平板显示3列 */
+@media (max-width: 1200px) {
+    .general-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .player-section .general-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 响应式：手机显示2列 */
+@media (max-width: 768px) {
+    .general-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .player-section .general-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .general-card {
+        padding: 10px;
+    }
+
+    .general-skills-preview {
+        font-size: 0.75em;
+        line-height: 1.4;
+    }
+
+    .player-section {
+        padding: 10px;
+    }
+
+    .player-section h3 {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
 }
 
 .general-card {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 15px;
+    padding: 12px;
     cursor: pointer;
     transition: all 0.2s;
     position: relative;
@@ -267,7 +322,7 @@ button {
 
 .general-name {
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1em;
     color: #333;
 }
 
@@ -279,8 +334,8 @@ button {
 }
 
 .faction-wei { background: #1e50a2; }
-.faction-shu { background: #228b22; }
-.faction-wu { background: #8b0000; }
+.faction-shu { background: #8b0000; }
+.faction-wu { background: #228b22; }
 .faction-qun { background: #808080; }
 
 .general-info {
@@ -299,7 +354,81 @@ button {
     color: #999;
 }
 
+/* 卡片上的技能预览 */
+.general-skills-preview {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #eee;
+    font-size: 0.8em;
+    color: #333;
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.general-skills-preview strong {
+    color: #8b0000;
+    font-weight: bold;
+}
+
+/* 武将卡片 - 结果页面 */
+.result-section .general-card {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-section .general-skills-preview {
+    flex: 1;
+}
+
+/* 普通模式 - 玩家分组 */
+.result-normal {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.players-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.player-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 4px solid #8b0000;
+}
+
+.player-section h3 {
+    margin-bottom: 12px;
+    color: #8b0000;
+    font-size: 1.1em;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.player-section .general-grid {
+    grid-template-columns: repeat(5, 1fr);
+}
+
 /* 斗地主结果 */
+.result-landlord > .result-header {
+    background: #fffbeb;
+    border-left: 4px solid #ffd700;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border-bottom: 1px solid #eee;
+}
+
+.result-landlord > .result-header h3 {
+    color: #8b0000;
+    font-size: 1.1em;
+}
+
 .landlord-section,
 .farmer-section {
     margin-bottom: 20px;
@@ -494,11 +623,17 @@ button {
 
 .detail-skills {
     line-height: 1.8;
-    color: #555;
+    color: #333;
+    font-size: 0.95em;
 }
 
 .detail-skills p {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    text-align: justify;
+}
+
+.detail-skills strong {
+    color: #8b0000;
 }
 
 /* 响应式 */
@@ -515,8 +650,17 @@ button {
         grid-template-columns: 1fr;
     }
 
-    .general-grid {
-        grid-template-columns: 1fr;
+    .general-skills-preview {
+        font-size: 0.8em;
+    }
+
+    .player-section {
+        padding: 10px;
+    }
+
+    .player-section h3 {
+        font-size: 1em;
+        margin-bottom: 10px;
     }
 
     .modal-content {

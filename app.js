@@ -70,6 +70,14 @@ function bindEvents() {
     document.getElementById('redrawBtn').addEventListener('click', drawGenerals);
     document.getElementById('redrawLandlordBtn').addEventListener('click', drawGenerals);
 
+    // 保存图片按钮
+    document.getElementById('saveNormalBtn').addEventListener('click', function() {
+        saveAsImage('normalResult', '武将抽取结果');
+    });
+    document.getElementById('saveLandlordBtn').addEventListener('click', function() {
+        saveAsImage('landlordResult', '斗地主武将抽取结果');
+    });
+
     // 禁用武将弹窗
     document.getElementById('openBanModal').addEventListener('click', openBanModal);
     document.getElementById('closeBanModal').addEventListener('click', closeBanModal);
@@ -210,16 +218,39 @@ function showNormalResult(generals) {
     document.getElementById('landlordResult').style.display = 'none';
     document.getElementById('normalTotal').textContent = generals.length;
 
-    let html = '';
-    for (let i = 0; i < generals.length; i++) {
-        html += createCard(generals[i]);
+    let container = document.getElementById('normalGeneralGrid');
+    container.innerHTML = '';
+
+    // 按玩家分组，每5个武将一组
+    let playerCount = generals.length / 5;
+    for (let i = 0; i < playerCount; i++) {
+        let playerGenerals = generals.slice(i * 5, (i + 1) * 5);
+
+        // 创建玩家区域
+        let playerSection = document.createElement('div');
+        playerSection.className = 'player-section';
+
+        // 玩家标题
+        let title = document.createElement('h3');
+        title.textContent = '玩家' + (i + 1);
+        playerSection.appendChild(title);
+
+        // 武将网格
+        let grid = document.createElement('div');
+        grid.className = 'general-grid';
+
+        let html = '';
+        for (let j = 0; j < playerGenerals.length; j++) {
+            html += createCard(playerGenerals[j]);
+        }
+        grid.innerHTML = html;
+        playerSection.appendChild(grid);
+
+        container.appendChild(playerSection);
     }
 
-    let grid = document.getElementById('normalGeneralGrid');
-    grid.innerHTML = html;
-
     // 绑定卡片点击
-    let cards = grid.querySelectorAll('.general-card');
+    let cards = container.querySelectorAll('.general-card');
     for (let i = 0; i < cards.length; i++) {
         cards[i].addEventListener('click', function() {
             showDetail(this.dataset.name);
@@ -266,6 +297,7 @@ function renderPool(elementId, generals) {
 // 创建武将卡片
 function createCard(g) {
     let factionClass = 'faction-' + getFactionCode(g.faction);
+    let skillsText = getSkillsText(g.skills);
     return '<div class="general-card" data-name="' + g.name + '">' +
         '<div class="general-header">' +
             '<span class="general-name">' + g.name + '</span>' +
@@ -275,6 +307,7 @@ function createCard(g) {
             '<span class="general-hp">' + g.hp + '</span>' +
             '<span class="general-pack">' + g.pack + '</span>' +
         '</div>' +
+        '<div class="general-skills-preview">' + skillsText + '</div>' +
     '</div>';
 }
 
@@ -320,36 +353,121 @@ function showDetail(name) {
     document.getElementById('detailModal').style.display = 'flex';
 }
 
+// 判断是否为真正的技能名
+function isSkillName(text, fullText, position) {
+    // 常见技能名列表
+    const commonSkillNames = ['奸雄','护驾','反馈','鬼才','刚烈','突袭','裸衣','天妒','遗计','倾国','洛神','仁德','激将','武圣','咆哮','观星','空城','龙胆','马术','铁骑','集智','奇才','制衡','救援','奇袭','克己','苦肉','英姿','反间','国色','流离','谦逊','连营','结姻','枭姬','急救','青囊','无双','离间','闭月','神速','据守','烈弓','狂骨','天香','红颜','不屈','雷击','鬼道','黄天','蛊惑','行殇','放逐','颂威','祸首','再起','巨象','烈刃','好施','缔盟','英魂','酒池','肉林','崩坏','暴虐','完杀','乱武','帷幕','驱虎','节命','强袭','八阵','火计','看破','连环','涅槃','猛进','乱击','血裔','双雄','巧变','屯田','凿险','急袭','享乐','放权','若愚','挑衅','志继','魂姿','制霸','直谏','固政','化身','新生','悲歌','断肠','落英','酒诗','镇军','绝情','伤逝','恩怨','眩惑','无言','举荐','散谣','制蛮','旋风','破军','甘露','补益','明策','智迟','陷阵','禁酒','奇策','智愚','贞烈','秘计','将驰','父魂','当先','伏枥','潜袭','安恤','追忆','疠火','醇醪','弓骑','解烦','恃勇','自守','宗室','权计','自立','排异','称象','仁心','峻刑','御策','绝策','灭计','焚城','惴恐','求援','陷嗣','龙吟','巧说','纵适','夺刀','暗箭','胆守','纵玄','直言','司敌','慎断','勇略','定品','法恩','宴诛','兴学','诏缚','强识','献图','忠勇','谮毁','骄矜','慎行','秉壹','渐营','矢北','窃听','献州','燕语','孝德','恢拓','明鉴','兴衰','讨袭','活墨','佐定','振赡','匡弼','怃戎','矢志','穿心','锋箭','寝情','贿生','督粮','腹鳞','怀异','急攻','饰非'];
+
+    // 检查是否在常见技能名列表中
+    if (commonSkillNames.indexOf(text) !== -1) {
+        return true;
+    }
+
+    // 检查是否是句首（技能描述的开头）
+    if (position === 0) {
+        return true;
+    }
+
+    // 检查前面是否是句号、分号、引号等标点
+    var prevChar = fullText.charAt(position - 1);
+    var endChars = ['。', '；', '】', '」', '』', ')', '）'];
+    if (endChars.indexOf(prevChar) !== -1) {
+        return true;
+    }
+
+    // 排除常见的非技能名（选择一项、选择两项、选择三项等）
+    if (text.indexOf('选择') === 0 && text.indexOf('项') === text.length - 1) {
+        return false;
+    }
+    var nonSkillNames = ['可以', '然后', '令其', '当你', '锁定技', '限定技', '觉醒技', '主公技'];
+    if (nonSkillNames.indexOf(text) !== -1) {
+        return false;
+    }
+
+    return false;
+}
+
 // 格式化技能描述
 function formatSkills(skills) {
-    // 按技能名称分割（技能名称后跟冒号）
-    // 改进正则表达式，确保正确分割技能描述
-    let parts = skills.split(/(?=^|[^\u4e00-\u9fa5])([\u4e00-\u9fa5]+：)/);
-    let html = '';
-    
-    // 处理分割结果
-    for (let i = 1; i < parts.length; i += 2) {
-        let skillHeader = parts[i];
-        let desc = (parts[i + 1] || '').trim();
-        
-        if (skillHeader) {
-            // 提取技能名称（冒号前的部分）
-            let nameIdx = skillHeader.indexOf('：');
-            if (nameIdx > 0) {
-                let name = skillHeader.substring(0, nameIdx);
-                html += '<p><strong>' + name + '</strong>：' + desc + '</p>';
-            } else {
-                html += '<p>' + skillHeader + desc + '</p>';
-            }
+    if (!skills) return '';
+
+    let matches = [];
+    let skillPattern = /([\u4e00-\u9fa5]{2,4})：/g;
+    let match;
+
+    // 找到所有技能名称的位置
+    while ((match = skillPattern.exec(skills)) !== null) {
+        let skillName = match[1];
+        let position = match.index;
+
+        // 验证是否为真正的技能名
+        if (isSkillName(skillName, skills, position)) {
+            matches.push({
+                name: skillName,
+                index: position,
+                fullMatch: match[0]
+            });
         }
     }
-    
-    // 如果没有分割成功，直接显示原始技能描述
-    if (!html) {
+
+    let html = '';
+
+    if (matches.length === 0) {
         html = '<p>' + skills + '</p>';
+    } else {
+        for (let i = 0; i < matches.length; i++) {
+            let current = matches[i];
+            let next = matches[i + 1];
+
+            let descStart = current.index + current.fullMatch.length;
+            let descEnd = next ? next.index : skills.length;
+            let desc = skills.substring(descStart, descEnd).trim();
+
+            html += '<p><strong>' + current.name + '</strong>：' + desc + '</p>';
+        }
     }
-    
+
     return html;
+}
+
+// 获取技能纯文本（用于卡片显示）
+function getSkillsText(skills) {
+    if (!skills) return '';
+
+    let matches = [];
+    let skillPattern = /([\u4e00-\u9fa5]{2,4})：/g;
+    let match;
+
+    while ((match = skillPattern.exec(skills)) !== null) {
+        let skillName = match[1];
+        let position = match.index;
+
+        if (isSkillName(skillName, skills, position)) {
+            matches.push({
+                name: skillName,
+                index: position,
+                fullMatch: match[0]
+            });
+        }
+    }
+
+    if (matches.length === 0) {
+        return skills;
+    }
+
+    let result = [];
+    for (let i = 0; i < matches.length; i++) {
+        let current = matches[i];
+        let next = matches[i + 1];
+
+        let descStart = current.index + current.fullMatch.length;
+        let descEnd = next ? next.index : skills.length;
+        let desc = skills.substring(descStart, descEnd).trim();
+
+        result.push('<strong>' + current.name + '</strong>：' + desc);
+    }
+
+    return result.join('<br><br>');
 }
 
 function closeDetailModal() {
@@ -438,4 +556,50 @@ function shuffle(array) {
         arr[j] = temp;
     }
     return arr;
+}
+
+// ========== 保存为图片功能 ==========
+
+function saveAsImage(elementId, fileName) {
+    let element = document.getElementById(elementId);
+    if (!element) {
+        alert('找不到要保存的内容');
+        return;
+    }
+
+    // 检查 html2canvas 是否加载
+    if (typeof html2canvas === 'undefined') {
+        alert('图片库加载中，请稍后再试');
+        return;
+    }
+
+    // 显示提示
+    let btn = event.target;
+    let originalText = btn.textContent;
+    btn.textContent = '生成中...';
+    btn.disabled = true;
+
+    // 使用 html2canvas 生成图片
+    html2canvas(element, {
+        backgroundColor: '#f5f5f5',
+        scale: 2, // 高清图片
+        useCORS: true,
+        allowTaint: true,
+        logging: false
+    }).then(function(canvas) {
+        // 转换为图片并下载
+        let link = document.createElement('a');
+        link.download = fileName + '_' + new Date().getTime() + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        // 恢复按钮
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }).catch(function(err) {
+        console.error('保存图片失败:', err);
+        alert('保存图片失败，请重试');
+        btn.textContent = originalText;
+        btn.disabled = false;
+    });
 }

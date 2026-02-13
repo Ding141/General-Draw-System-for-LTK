@@ -116,6 +116,26 @@
                     <span class="pack-name">一将成名2015</span>
                     <span class="pack-count" data-pack="yj2015">0</span>
                 </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_yj2012">
+                    <span class="pack-name">界一将成名2012</span>
+                    <span class="pack-count" data-pack="jie_yj2012">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_yj2013">
+                    <span class="pack-name">界一将成名2013</span>
+                    <span class="pack-count" data-pack="jie_yj2013">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_yj2014">
+                    <span class="pack-name">界一将成名2014</span>
+                    <span class="pack-count" data-pack="jie_yj2014">0</span>
+                </label>
+                <label class="pack-item">
+                    <input type="checkbox" class="pack-checkbox" value="jie_yj2015">
+                    <span class="pack-name">界一将成名2015</span>
+                    <span class="pack-count" data-pack="jie_yj2015">0</span>
+                </label>
             </div>
             <div class="pack-actions">
                 <button type="button" id="selectAllPacks">全选</button>
@@ -147,13 +167,23 @@
             <div id="normalResult" class="result-normal">
                 <div class="result-header">
                     <span>共抽取 <strong id="normalTotal">0</strong> 名武将</span>
-                    <button type="button" id="redrawBtn" class="btn-small">重新抽取</button>
+                    <div class="result-actions">
+                        <button type="button" id="saveNormalBtn" class="btn-small btn-save">保存图片</button>
+                        <button type="button" id="redrawBtn" class="btn-small">重新抽取</button>
+                    </div>
                 </div>
-                <div class="general-grid" id="normalGeneralGrid"></div>
+                <div class="players-container" id="normalGeneralGrid"></div>
             </div>
 
             <!-- 斗地主模式结果 -->
             <div id="landlordResult" class="result-landlord" style="display: none;">
+                <div class="result-header">
+                    <span>斗地主模式抽取结果</span>
+                    <div class="result-actions">
+                        <button type="button" id="saveLandlordBtn" class="btn-small btn-save">保存图片</button>
+                        <button type="button" id="redrawLandlordBtn" class="btn-small">重新抽取</button>
+                    </div>
+                </div>
                 <div class="landlord-section">
                     <h3>地主武将池（5选1）</h3>
                     <div class="general-grid" id="landlordGrid"></div>
@@ -165,9 +195,6 @@
                 <div class="farmer-section">
                     <h3>农民武将池 B（3选1）</h3>
                     <div class="general-grid" id="farmerBGrid"></div>
-                </div>
-                <div class="result-actions">
-                    <button type="button" id="redrawLandlordBtn" class="btn-small">重新抽取</button>
                 </div>
             </div>
         </section>
@@ -213,6 +240,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
