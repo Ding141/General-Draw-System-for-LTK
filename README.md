@@ -1,6 +1,9 @@
 # 三国杀面杀体验优化工具 🎲
 
 专为三国杀面杀场景设计的武将抽取辅助工具，解决武将数量多、抽取繁琐、强度失衡及携带不便的痛点，让面杀更流畅、公平、有趣。
+
+**点击[网页](https://ding141.github.io/General-Draw-System-for-LTK/)即可使用！**
+
 <img width="3047" height="1676" alt="微信图片_20260213195557_113_50" src="https://github.com/user-attachments/assets/86bafe68-b3de-49d2-839c-680eef382666" />
 
 ---
